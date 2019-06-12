@@ -29,6 +29,7 @@ public class GateView extends FixedPanel implements ItemListener {
         this.gate = gate;
 
         int inputSize = gate.getInputSize();
+        int outputSize = gate.getInputSize();
 
         switches = new Switch[inputSize];
         inputBoxes = new JCheckBox[inputSize];
