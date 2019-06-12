@@ -1,12 +1,13 @@
 package br.pro.hashi.ensino.desagil.aps.model;
 
 public class DeMux extends Gate {
-    NandGate nandA;
-    NandGate nandB;
-    NandGate nandC;
-    NandGate nandD;
-    NandGate nandE;
+    private final NandGate nandA;
+    private final NandGate nandB;
+    private final NandGate nandC;
+    private final NandGate nandD;
+    private final NandGate nandE;
 
+    // Modelo usado: https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/DEMUX_Gate.svg/512px-DEMUX_Gate.svg.png
     public DeMux() {
         super("DeMux", 2, 2);
         nandA = new NandGate();
@@ -15,6 +16,7 @@ public class DeMux extends Gate {
         nandD = new NandGate();
         nandE = new NandGate();
 
+        // Conexões Internas
         nandB.connect(1, nandA);
 
         nandD.connect(0, nandB);
@@ -26,6 +28,7 @@ public class DeMux extends Gate {
 
     @Override
     public boolean read(int outputPin) {
+        // Conexões de Saída (Output)
         if (outputPin == 0) {
             return nandD.read();
         } else if (outputPin == 1) {
@@ -38,6 +41,7 @@ public class DeMux extends Gate {
     @Override
     public void connect(int inputPin, SignalEmitter emitter) {
         switch (inputPin) {
+            // Conexões de Entrada (Emitter)
             case 0:
                 nandB.connect(0, emitter);
                 nandC.connect(1, emitter);

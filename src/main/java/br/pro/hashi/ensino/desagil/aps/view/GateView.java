@@ -29,7 +29,6 @@ public class GateView extends FixedPanel implements ItemListener {
         this.gate = gate;
 
         int inputSize = gate.getInputSize();
-        int outputSize = gate.getInputSize();
 
         switches = new Switch[inputSize];
         inputBoxes = new JCheckBox[inputSize];
@@ -46,6 +45,7 @@ public class GateView extends FixedPanel implements ItemListener {
         x = BORDER;
         y = -(SWITCH_SIZE / 2);
         step = (GATE_HEIGHT / (inputSize + 1));
+
         for (JCheckBox inputBox : inputBoxes) {
             y += step;
             add(inputBox, x, y, SWITCH_SIZE, SWITCH_SIZE);
@@ -85,12 +85,25 @@ public class GateView extends FixedPanel implements ItemListener {
 
         g.drawImage(image, BORDER + SWITCH_SIZE, 0, GATE_WIDTH, GATE_HEIGHT, this);
 
-        if (gate.read()) {
-            g.setColor(Color.RED);
-        } else {
-            g.setColor(Color.BLACK);
+        int outputSize = gate.getOutputSize();
+
+        // Espaçamento
+        int y, step;
+        y = -(SWITCH_SIZE / 2);
+        step = (GATE_HEIGHT / (outputSize + 1));
+
+        for (int i = 0; i < outputSize; i++) {
+            y += step;
+            boolean result = gate.read(i);
+
+            // Display da Cor no Resultado (Vermelho | Preto)
+            if (result) {
+                g.setColor(Color.RED);
+            } else {
+                g.setColor(Color.BLACK);
+            }
+            g.fillOval(BORDER + SWITCH_SIZE + GATE_WIDTH, y, LIGHT_SIZE, LIGHT_SIZE);
         }
-        g.fillOval(BORDER + SWITCH_SIZE + GATE_WIDTH, (GATE_HEIGHT - LIGHT_SIZE) / 2, LIGHT_SIZE, LIGHT_SIZE);
 
         getToolkit().sync();
     }
